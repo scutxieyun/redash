@@ -17,7 +17,7 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/19600/orac
 RUN wget https://download.oracle.com/otn_software/linux/instantclient/19600/oracle-instantclient19.6-devel-19.6.0.0.0-1.x86_64.rpm
 # We first copy only the requirements file, to avoid rebuilding on every file
 # change.
-COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_all_ds.txt ./
+COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_oracle_ds.txt requirements_all_ds.txt ./
 RUN pip install -r requirements.txt -r requirements_dev.txt -r -r requirements_oracle_ds.txt
 RUN if [ "x$skip_ds_deps" = "x" ] ; then pip install -r requirements_all_ds.txt ; else echo "Skipping pip install -r requirements_all_ds.txt" ; fi
 
