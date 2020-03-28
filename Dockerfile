@@ -28,19 +28,18 @@ RUN apt-get install libaio-dev -y
 RUN apt-get clean -y
 
 RUN ln -s /usr/local/instantclient_19_6 /usr/local/instantclient
-#RUN ln -s /usr/local/instantclient/libclntsh.so.19.1 /usr/local/instantclient/libclntsh.so
-#RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 # We first copy only the requirements file, to avoid rebuilding on every file
 # change.
-#COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_oracle_ds.txt requirements_all_ds.txt ./
-#RUN pip install -r requirements.txt -r requirements_dev.txt -r requirements_oracle_ds.txt
-#RUN if [ "x$skip_ds_deps" = "x" ] ; then pip install -r requirements_all_ds.txt ; else echo "Skipping pip install -r requirements_all_ds.txt" ; fi
+COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_oracle_ds.txt requirements_all_ds.txt ./
+RUN pip install -r requirements.txt -r requirements_dev.txt -r requirements_oracle_ds.txt
+RUN if [ "x$skip_ds_deps" = "x" ] ; then pip install -r requirements_all_ds.txt ; else echo "Skipping pip install -r requirements_all_ds.txt" ; fi
 
-#COPY . /app
-#COPY --from=frontend-builder /frontend/client/dist /app/client/dist
-#RUN chown -R redash /app
-#USER redash
+COPY . /app
+COPY --from=frontend-builder /frontend/client/dist /app/client/dist
+RUN chown -R redash /app
+USER redash
 
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 CMD ["server"]
