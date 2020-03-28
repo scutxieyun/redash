@@ -24,7 +24,7 @@ RUN unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
 RUN unzip instantclient-basic-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
 RUN unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
 RUN ln -s /usr/local/instantclient_19_6 /usr/local/instantclient
-RUN ln -s /usr/local/instantclient/libclntsh.so.11.1 /usr/local/instantclient/libclntsh.so
+RUN ln -s /usr/local/instantclient/libclntsh.so.19.6 /usr/local/instantclient/libclntsh.so
 RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
 RUN apt-get install libaio-dev -y
