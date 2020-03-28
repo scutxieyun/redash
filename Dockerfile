@@ -13,8 +13,23 @@ FROM redash/base:debian
 # Controls whether to install extra dependencies needed for all data sources.
 ARG skip_ds_deps
 
-RUN wget https://download.oracle.com/otn_software/linux/instantclient/19600/oracle-instantclient19.6-basic-19.6.0.0.0-1.x86_64.rpm
-RUN wget https://download.oracle.com/otn_software/linux/instantclient/19600/oracle-instantclient19.6-devel-19.6.0.0.0-1.x86_64.rpm
+wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip
+wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip
+wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip
+
+RUN apt-get update  -y
+RUN apt-get install -y unzip
+
+RUN unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
+RUN unzip instantclient-basic-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
+RUN unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip -d /usr/local/
+RUN ln -s /usr/local/instantclient_19_6 /usr/local/instantclient
+RUN ln -s /usr/local/instantclient/libclntsh.so.11.1 /usr/local/instantclient/libclntsh.so
+RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
+
+RUN apt-get install libaio-dev -y
+RUN apt-get clean -y
+
 # We first copy only the requirements file, to avoid rebuilding on every file
 # change.
 COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_oracle_ds.txt requirements_all_ds.txt ./
