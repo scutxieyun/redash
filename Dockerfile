@@ -30,6 +30,7 @@ RUN apt-get clean -y
 RUN ln -s /usr/local/instantclient_19_6 /usr/local/instantclient
 RUN ln -s /usr/local/instantclient/sqlplus /usr/bin/sqlplus
 
+ENV ORACLE_HOME=/usr/local/instantclient
 # We first copy only the requirements file, to avoid rebuilding on every file
 # change.
 COPY requirements.txt requirements_bundles.txt requirements_dev.txt requirements_oracle_ds.txt requirements_all_ds.txt ./
