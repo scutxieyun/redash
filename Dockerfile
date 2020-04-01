@@ -41,7 +41,7 @@ COPY . /app
 COPY --from=frontend-builder /frontend/client/dist /app/client/dist
 RUN chown -R redash /app
 ENV LD_LIBRARY_PATH=/usr/local/instantclient
-USER redash
+#USER redash
 
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 CMD ["server"]
