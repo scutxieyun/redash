@@ -1,10 +1,15 @@
 # This configuration file is for the **development** setup.
 # For a production example please refer to setup/docker-compose.yml.
 version: '3.2'
+
+
 services:
   server:
-    build: .
-    command: dev_server
+    image: registry.cn-hangzhou.aliyuncs.com/scutxieyun/redash-base 
+    command: server
+#    entrypoint:
+#      - /bin/sh
+#    tty: true
     depends_on:
       - postgres
       - redis
@@ -12,16 +17,16 @@ services:
       - "5000:5000"
       - "5678:5678"
     volumes:
-      - ".:/app"
+      - "/d/personal/tms/redash:/app"
     environment:
       PYTHONUNBUFFERED: 0
-      REDASH_LOG_LEVEL: "INFO"
+      REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
       REDASH_DATABASE_URL: "postgresql://postgres@postgres/postgres"
       REDASH_RATELIMIT_ENABLED: "false"
   worker:
-    build: .
-    command: dev_worker
+    image: registry.cn-hangzhou.aliyuncs.com/scutxieyun/redash-base
+    command: worker
     volumes:
       - type: bind
         source: .
@@ -45,5 +50,7 @@ services:
     # tests.
     ports:
       - "15432:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     command: "postgres -c fsync=off -c full_page_writes=off -c synchronous_commit=OFF"
     restart: unless-stopped

@@ -25,6 +25,7 @@ import editorTemplate from './choropleth-editor.html';
 
 import countriesDataUrl from './countries.geo.json';
 import subdivJapanDataUrl from './japan.prefectures.geo.json';
+import subdivChinaDataUrl from './china.geo.json';
 
 export const ChoroplethPalette = _.extend({}, AdditionalColors, ColorPalette);
 
@@ -115,6 +116,7 @@ const ChoroplethRenderer = {
       switch (type) {
         case 'countries': return countriesDataUrl;
         case 'subdiv_japan': return subdivJapanDataUrl;
+        case 'subdiv_china': return subdivChinaDataUrl
         default: return '';
       }
     };
@@ -264,6 +266,7 @@ const ChoroplethEditor = {
     this.mapTypes = {
       countries: 'Countries',
       subdiv_japan: 'Japan/Prefectures',
+      subdiv_china: 'China/Prefectures'
     };
 
     this.clusteringModes = {
@@ -310,6 +313,15 @@ const ChoroplethEditor = {
             name: 'Name',
             name_local: 'Name (local)',
             iso_3166_2: 'ISO-3166-2',
+          };
+          break;
+        case 'subdiv_china':
+          propDescription = `
+            <div><code>{{ @@name }}</code> Prefecture name in English;</div>
+          `;
+          this.countryCodeTypes = {
+            name: 'Name',
+            id: 'id (local)'
           };
           break;
         case 'countries':
