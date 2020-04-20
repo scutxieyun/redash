@@ -57,7 +57,6 @@ export default function Renderer({ options, data, context }) {
   if (data.rows.length === 0) {
     return null;
   }
-
   return (
     <div className="table-visualization-container">
       <Table
@@ -65,6 +64,7 @@ export default function Renderer({ options, data, context }) {
         data-test="TableVisualization"
         columns={tableColumns}
         dataSource={preparedRows}
+        className={options.bigscreen ? "big-screen": ""}
         rowKey={(record, index) => rowKeyPrefix + index}
         pagination={{
           size: context === 'widget' ? 'small' : '',

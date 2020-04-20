@@ -13,6 +13,7 @@ const ALLOWED_ITEM_PER_PAGE = [5, 10, 15, 20, 25, 50, 100, 150, 200, 250];
 
 const DEFAULT_OPTIONS = {
   itemsPerPage: 25,
+  bigscreen: false,
 };
 
 function getColumnContentAlignment(type) {
@@ -127,6 +128,7 @@ const GridEditor = {
     };
 
     $scope.$watch('$ctrl.options', (options) => {
+      console.log("options changed", options)
       this.onOptionsChange(options);
     }, true);
 
