@@ -24,6 +24,7 @@ const DEFAULT_OPTIONS = {
   direction: { type: 'counterclockwise' },
 
   // showDataLabels: false, // depends on chart type
+  bigscreen: false,
   numberFormat: '0,0[.]00000',
   percentFormat: '0[.]00%',
   // dateTimeFormat: 'DD/MM/YYYY HH:mm', // will be set from clientConfig

@@ -63,7 +63,7 @@ function preparePieLayout(layout, options, data) {
   const hasName = /{{\s*@@name\s*}}/.test(options.textFormat);
 
   const { cellsInRow, cellWidth, cellHeight, xPadding } = getPieDimensions(data);
-
+  layout.paper_bgcolor = options.bigscreen ? '#647bee': '#fff';    
   if (hasName) {
     layout.annotations = [];
   } else {
@@ -118,6 +118,10 @@ export default function prepareLayout(element, options, data) {
     height: Math.floor(element.offsetHeight),
     autosize: true,
     showlegend: has(options, 'legend') ? options.legend.enabled : true,
+    plot_bgcolor: options.bigscreen ? '#647bee': '#fff',
+    annotations: {
+      font: {color: options.bigscreen ? '#fff': '#000'}
+    },
   };
 
   switch (options.globalSeriesType) {

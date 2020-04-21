@@ -64,7 +64,7 @@ export default function Renderer({ options, data, context }) {
         data-test="TableVisualization"
         columns={tableColumns}
         dataSource={preparedRows}
-        className={options.bigscreen ? "big-screen": ""}
+        className={options.bigscreen ? 'big-screen' : ''}
         rowKey={(record, index) => rowKeyPrefix + index}
         pagination={{
           size: context === 'widget' ? 'small' : '',

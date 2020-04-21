@@ -44,8 +44,11 @@ export default function PlotlyChart({ options, data }) {
       return () => Plotly.purge(container);
     }
   }, [container]);
-
-  return <div className="chart-visualization-container" ref={setContainer} />;
+  let className = "chart-visualization-container";
+  if (options.bigscreen) {
+    className = "chart-visualization-container bigscreen";
+  }
+  return <div className={className} ref={setContainer} />;
 }
 
 PlotlyChart.propTypes = RendererPropTypes;

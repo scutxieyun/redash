@@ -128,7 +128,6 @@ const GridEditor = {
     };
 
     $scope.$watch('$ctrl.options', (options) => {
-      console.log("options changed", options)
       this.onOptionsChange(options);
     }, true);
 
