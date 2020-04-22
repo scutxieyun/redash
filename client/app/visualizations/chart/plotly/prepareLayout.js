@@ -63,7 +63,6 @@ function preparePieLayout(layout, options, data) {
   const hasName = /{{\s*@@name\s*}}/.test(options.textFormat);
 
   const { cellsInRow, cellWidth, cellHeight, xPadding } = getPieDimensions(data);
-  layout.paper_bgcolor = options.bigscreen ? '#647bee': '#fff';    
   if (hasName) {
     layout.annotations = [];
   } else {
@@ -89,8 +88,10 @@ function prepareDefaultLayout(layout, options, data) {
   const y2Series = data.filter(s => s.yaxis === 'y2');
 
   layout.xaxis = prepareXAxis(options.xAxis, options);
-
+  layout.xaxis.color = options.bigscreen ? '#FFF': '#444';
   layout.yaxis = prepareYAxis(options.yAxis[0], options, ySeries);
+  layout.yaxis.color = options.bigscreen ? '#FFF': '#444';
+  layout.yaxis.gridcolor = options.bigscreen ? '#eee': '#444';
   if (y2Series.length > 0) {
     layout.yaxis2 = prepareYAxis(options.yAxis[1], options, y2Series);
     layout.yaxis2.overlaying = 'y';
@@ -118,10 +119,14 @@ export default function prepareLayout(element, options, data) {
     height: Math.floor(element.offsetHeight),
     autosize: true,
     showlegend: has(options, 'legend') ? options.legend.enabled : true,
-    plot_bgcolor: options.bigscreen ? '#647bee': '#fff',
+    plot_bgcolor: options.bigscreen ? '#2a3673': '#fff',
+    paper_bgcolor: options.bigscreen ? '#2a3673': '#fff',
+    font: {
+      color: options.bigscreen ? '#FFF': '#444'
+    },
     annotations: {
       font: {color: options.bigscreen ? '#fff': '#000'}
-    },
+    }
   };
 
   switch (options.globalSeriesType) {
