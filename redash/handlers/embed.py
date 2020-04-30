@@ -24,7 +24,8 @@ def embed(query_id, visualization_id, org_slug=None):
         'embed': True,
         'referer': request.headers.get('Referer')
     })
-    return render_index()
+    remote_url = request.args.get("remote_url", type=bool, default=False)
+    return render_index(remote_url)
 
 
 @routes.route(org_scoped_rule('/public/dashboards/<token>'), methods=['GET'])
