@@ -163,20 +163,18 @@ const ChoroplethRenderer = {
             fillColor: color,
             fillOpacity: 1,
           });
-
-          if (this.options.tooltip.enabled) {
+          if (this.options.tooltip.enabled && value !== undefined) {
             layer.bindTooltip($sanitize(formatSimpleTemplate(
               this.options.tooltip.template,
               featureData,
-            )), { sticky: true });
+            )), { sticky: true, permanent:true });
           }
-
-          if (this.options.popup.enabled) {
+          /*if (this.options.popup.enabled && value !== undefined) {
             layer.bindPopup($sanitize(formatSimpleTemplate(
               this.options.popup.template,
               featureData,
             )));
-          }
+          }*/
 
           layer.on('mouseover', () => {
             layer.setStyle({
@@ -194,7 +192,6 @@ const ChoroplethRenderer = {
       });
 
       const choroplethBounds = choropleth.getBounds();
-
       map = L.map($element[0].children[0].children[0], {
         center: choroplethBounds.getCenter(),
         zoom: 1,
@@ -215,7 +212,6 @@ const ChoroplethRenderer = {
         map.off('movestart', onMapMoveStart);
         map.off('moveend', onMapMoveEnd);
       });
-
       updateBounds({ disableAnimation: true });
     };
 
