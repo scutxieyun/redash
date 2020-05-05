@@ -164,10 +164,14 @@ const ChoroplethRenderer = {
             fillOpacity: 1,
           });
           if (this.options.tooltip.enabled && value !== undefined) {
+            var direction = "auto"
+            if (layer.feature.properties.tooltipAlign !== undefined) {
+              direction = layer.feature.properties.tooltipAlign
+            }
             layer.bindTooltip($sanitize(formatSimpleTemplate(
               this.options.tooltip.template,
               featureData,
-            )), { sticky: true, permanent:true });
+            )), { sticky: true, permanent:true, direction: direction });
           }
           /*if (this.options.popup.enabled && value !== undefined) {
             layer.bindPopup($sanitize(formatSimpleTemplate(

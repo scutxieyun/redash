@@ -15,6 +15,7 @@ export const BaseColors = {
   Black: '#000000',
   Gray: '#494949',
   Pink: '#FF7DE3',
+  'DCBlue': '#1e5078',
   'Dark Blue': '#002FB4',
 };
 
