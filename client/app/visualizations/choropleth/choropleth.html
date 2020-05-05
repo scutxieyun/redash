@@ -1,4 +1,4 @@
-<div class="map-visualization-container">
+<div class="map-visualization-container {{$ctrl.options.bigscreen ? 'bigscreen': ''}}">
   <div resize-event="handleResize()" ng-style="{ background: $ctrl.options.colors.background }"></div>
   <div ng-if="$ctrl.options.legend.visible && ($ctrl.legendItems.length > 0)"
     class="leaflet-bar map-custom-control" ng-class="$ctrl.options.legend.position"
