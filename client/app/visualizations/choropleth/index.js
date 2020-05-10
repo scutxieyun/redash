@@ -214,7 +214,7 @@ const ChoroplethRenderer = {
       var centerLat = isNaN(parseFloat(this.options.centerLat)) ? 49.015949793058326 : parseFloat(this.options.centerLat)
       var centerLng = isNaN(parseFloat(this.options.centerLng)) ? 103.47045222207386 : parseFloat(this.options.centerLng)
       if (!(this.options.centerTitle === undefined || this.options.centerTitle.trim() === '')){ 
-        var title = L.popup()
+        var title = L.popup({closeButton: false,autoClose:false,closeOnClick:false,className:"title-popup", maxWidth: 400})
           .setLatLng({lat: centerLat,lng: centerLng})
           .setContent(this.options.centerTitle)
           .openOn(map);
