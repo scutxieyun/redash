@@ -192,9 +192,12 @@ const ChoroplethRenderer = {
               fillColor: color,
             });
           });
+          // 谢云: 判断这个layer是不是给banner预留，如果是，打上banner
+          if (layer.feature.properties.id === 'banner') {
+            layer.bindTooltip("百果园素生鲜", { sticky: true, permanent:true})
+          }
         },
       });
-
       const choroplethBounds = choropleth.getBounds();
       map = L.map($element[0].children[0].children[0], {
         center: choroplethBounds.getCenter(),
@@ -204,10 +207,22 @@ const ChoroplethRenderer = {
         scrollWheelZoom: false,
         maxBounds: choroplethBounds,
         maxBoundsViscosity: 1,
-        attributionControl: false,
+        attributionControl: true,
         fullscreenControl: true,
       });
-
+      
+      var centerLat = isNaN(parseFloat(this.options.centerLat)) ? 49.015949793058326 : parseFloat(this.options.centerLat)
+      var centerLng = isNaN(parseFloat(this.options.centerLng)) ? 103.47045222207386 : parseFloat(this.options.centerLng)
+      if (!(this.options.centerTitle === undefined || this.options.centerTitle.trim() === '')){ 
+        var title = L.popup()
+          .setLatLng({lat: centerLat,lng: centerLng})
+          .setContent(this.options.centerTitle)
+          .openOn(map);
+      }
+      map.on('click', (evt) => {
+        console.log(evt)
+      });
+    
       map.on('focus', () => {
         map.on('movestart', onMapMoveStart);
         map.on('moveend', onMapMoveEnd);
