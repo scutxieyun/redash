@@ -1,4 +1,5 @@
 import sqlparse
+import logging
 
 from flask import jsonify, request, url_for
 from flask_login import login_required
