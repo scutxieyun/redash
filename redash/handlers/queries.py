@@ -1,10 +1,10 @@
 import sqlparse
+
 from flask import jsonify, request, url_for
 from flask_login import login_required
 from flask_restful import abort
 from sqlalchemy.orm.exc import StaleDataError
 from funcy import partial
-
 from redash import models, settings
 from redash.authentication.org_resolving import current_org
 from redash.handlers.base import (BaseResource, filter_by_tags, get_object_or_404,
@@ -17,7 +17,7 @@ from redash.permissions import (can_modify, not_view_only, require_access,
 from redash.utils import collect_parameters_from_request
 from redash.serializers import QuerySerializer
 from redash.models.parameterized_query import ParameterizedQuery
-
+logger = logging.getLogger('queries')
 
 # Ordering map for relationships
 order_map = {
@@ -449,10 +449,17 @@ class QueryRefreshResource(BaseResource):
 
         query = get_object_or_404(models.Query.get_by_id_and_org, query_id, self.current_org)
         require_access(query, self.current_user, not_view_only)
-
-        parameter_values = collect_parameters_from_request(request.args)
+        parameter_values = None
+        
+        ##允许通过post消息，将json传进来
+        if request.is_json:
+          body = (request.get_json())
+          #for k, v in body.iteritems(): 不知道为什么不对
+          #  logger("{}: {}".format(k,v))
+          parameter_values = collect_parameters_from_request(body)
+        else:
+          parameter_values = collect_parameters_from_request(request.args)
         parameterized_query = ParameterizedQuery(query.query_text, org=self.current_org)
-
         return run_query(parameterized_query, parameter_values, query.data_source, query.id)
 
 
