@@ -451,11 +451,8 @@ class QueryRefreshResource(BaseResource):
         require_access(query, self.current_user, not_view_only)
         parameter_values = None
         
-        ##允许通过post消息，将json传进来
         if request.is_json:
           body = (request.get_json())
-          #for k, v in body.iteritems(): 不知道为什么不对
-          #  logger("{}: {}".format(k,v))
           parameter_values = collect_parameters_from_request(body)
         else:
           parameter_values = collect_parameters_from_request(request.args)
